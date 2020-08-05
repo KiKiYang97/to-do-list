@@ -47,6 +47,9 @@ public class TodoListServiceTest {
 
     @Test
     void should_return_todo_when_post_given_todo() {
+        given(todoListRepository.save(todo )).willReturn(todo );
+        Todo savedTodo = todoListService.save(todo);
+        assertEquals(todo,savedTodo);
     }
 
     @Test
