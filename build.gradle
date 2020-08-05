@@ -1,0 +1,43 @@
+plugins {
+	id 'java'
+	id 'jacoco'
+}
+
+group = 'com.dunka'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	jcenter()
+}
+
+jacocoTestReport {
+	reports {
+		csv.enabled true
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.3.1.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.3.1.RELEASE'
+	runtime group: 'com.h2database', name: 'h2', version: '1.4.200'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	compileOnly 'org.projectlombok:lombok:1.18.12'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+	testCompileOnly 'org.projectlombok:lombok:1.18.12'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.1.RELEASE'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+	testCompile "org.mockito:mockito-core:3.4.0"
+}
+
+test {
+	useJUnitPlatform()
+}
