@@ -30,5 +30,6 @@ public class TodoListService {
     }
 
     public void deleteById(Integer id) {
+        todoListRepository.deleteById(id);
     }
 }
