@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class TodoListServiceTest {
     private static TodoListService todoListService;
@@ -63,5 +63,10 @@ public class TodoListServiceTest {
     }
     @Test
     void should_return_todo_when_delete_given_id() {
+        Integer id = 1;
+//        given(todoListRepository.findById(id)).willReturn(Optional.of(todo ));
+        doAnswer(invocation -> null).when(todoListRepository).deleteById(id);
+        todoListService.deleteById(id);
+        verify(todoListRepository).deleteById(id);
     }
 }
