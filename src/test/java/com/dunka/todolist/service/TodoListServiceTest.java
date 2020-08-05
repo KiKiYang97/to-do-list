@@ -54,6 +54,10 @@ public class TodoListServiceTest {
 
     @Test
     void should_return_todo_when_put_given_id_and_todo() {
+        given(todoListRepository.save(todo2)).willReturn(todo2);
+        Integer id = 1;
+        Todo putTodo = todoListService.putTodo(id,todo2);
+        assertEquals(todo2,putTodo);
     }
     @Test
     void should_return_todo_when_delete_given_id() {

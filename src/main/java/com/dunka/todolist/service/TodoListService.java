@@ -20,4 +20,8 @@ public class TodoListService {
     public Todo save(Todo todo) {
         return todoListRepository.save(todo);
     }
+
+    public Todo putTodo(Integer id, Todo todo2) {
+        return null;
+    }
 }
