@@ -2,9 +2,11 @@ package com.dunka.todolist.service;
 
 import com.dunka.todolist.model.Todo;
 import com.dunka.todolist.repository.TodoListRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoListService {
@@ -22,6 +24,8 @@ public class TodoListService {
     }
 
     public Todo putTodo(Integer id, Todo todo2) {
-        return null;
+        Todo todo = todoListRepository.findById(id).orElse(null);
+        BeanUtils.copyProperties(todo2,todo);
+        return todoListRepository.save(todo);
     }
 }

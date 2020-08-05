@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -54,8 +55,9 @@ public class TodoListServiceTest {
 
     @Test
     void should_return_todo_when_put_given_id_and_todo() {
-        given(todoListRepository.save(todo2)).willReturn(todo2);
         Integer id = 1;
+        given(todoListRepository.findById(id)).willReturn(Optional.of(todo ));
+        given(todoListRepository.save(todo2)).willReturn(todo2);
         Todo putTodo = todoListService.putTodo(id,todo2);
         assertEquals(todo2,putTodo);
     }
