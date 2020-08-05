@@ -18,6 +18,6 @@ public class TodoListService {
     }
 
     public Todo save(Todo todo) {
-        return null;
+        return todoListRepository.save(todo);
     }
 }
