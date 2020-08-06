@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +32,7 @@ public class TodoListIntegrationTest {
     private List<Todo> todoList;
     private Todo todo;
     private Integer id;
-
+    private String todoInfo;
     @AfterEach
     void tearDown() {
         todoListRepository.deleteAll();
@@ -44,6 +47,10 @@ public class TodoListIntegrationTest {
         todoList.add(todo);
         todoList.add(todo2);
         todoList.add(todo3);
+        todoInfo = "{\n" +
+                "    \"content\": \"1234\",\n" +
+                "    \"status\": true\n" +
+                "}";
     }
 
     @Test
@@ -55,5 +62,15 @@ public class TodoListIntegrationTest {
                 .andExpect(jsonPath("$[0].id").isNumber())
                 .andExpect(jsonPath("$[0].content").value("111"))
                 .andExpect(jsonPath("$[0].status").value(true));
+    }
+
+    @Test
+    void should_post_todo_when_hit_post_todo_end_point_given_todo() throws Exception {
+        mockMvc.perform(post("/todos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(todoInfo)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
     }
 }
