@@ -18,5 +18,14 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
-    private Boolean status;
+    private Boolean status = false;
+
+    public Todo(String content, Boolean status) {
+        this.content = content;
+        this.status = status;
+    }
+
+    public Todo(String content) {
+        this.content = content;
+    }
 }
