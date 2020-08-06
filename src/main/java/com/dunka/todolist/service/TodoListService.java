@@ -1,5 +1,6 @@
 package com.dunka.todolist.service;
 
+import com.dunka.todolist.exception.NoSuchDataException;
 import com.dunka.todolist.model.Todo;
 import com.dunka.todolist.repository.TodoListRepository;
 import org.springframework.beans.BeanUtils;
@@ -27,11 +28,11 @@ public class TodoListService {
         return todoListRepository.save(todo);
     }
 
-    public Todo putTodo(Integer id, Todo todo2) {
+    public Todo putTodo(Integer id, Todo todo2) throws NoSuchDataException {
         todo2.setId(id);
         Todo todo = todoListRepository.findById(id).orElse(null);
         if (todo == null) {
-            //throw
+            throw new NoSuchDataException();
         } else {
             if(todo2.getContent()!=null) todo.setContent(todo2.getContent());
             if(todo2.getStatus()!=null) todo.setStatus(todo2.getStatus());

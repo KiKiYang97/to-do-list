@@ -1,5 +1,6 @@
 package com.dunka.todolist.controller;
 
+import com.dunka.todolist.exception.NoSuchDataException;
 import com.dunka.todolist.model.Todo;
 import com.dunka.todolist.service.TodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class TodoListController {
     }
 
     @PutMapping("/{id}")
-    public Todo updateTodo(@RequestBody Todo newTodo,@PathVariable Integer id) {
+    public Todo updateTodo(@RequestBody Todo newTodo,@PathVariable Integer id) throws NoSuchDataException {
         return todoListService.putTodo(id,newTodo);
     }
 

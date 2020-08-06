@@ -1,5 +1,6 @@
 package com.dunka.todolist.service;
 
+import com.dunka.todolist.exception.NoSuchDataException;
 import com.dunka.todolist.model.Todo;
 import com.dunka.todolist.repository.TodoListRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -54,7 +55,7 @@ public class TodoListServiceTest {
     }
 
     @Test
-    void should_return_todo_when_put_given_id_and_todo() {
+    void should_return_todo_when_put_given_id_and_todo() throws NoSuchDataException {
         Integer id = 1;
         given(todoListRepository.findById(id)).willReturn(Optional.of(todo ));
         given(todoListRepository.save(todo2)).willReturn(todo2);
