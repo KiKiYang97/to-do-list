@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +30,7 @@ public class TodoListIntegrationTest {
 
     private List<Todo> todoList;
     private Todo todo;
-    private Integer id;
+    private final Integer id = 1;
     private String todoInfo;
     @AfterEach
     void tearDown() {
@@ -73,4 +72,13 @@ public class TodoListIntegrationTest {
                 .andDo(print());
 
     }
+
+    @Test
+    void should_return_msg_when_hit_delete_todo_end_point_given_id() throws Exception {
+        todoListRepository.saveAll(todoList);
+        mockMvc.perform(delete("/todos/" + id))
+                .andExpect(jsonPath("$").value("DELETE_SUCCESS"))
+                .andDo(print());
+    }
+
 }
