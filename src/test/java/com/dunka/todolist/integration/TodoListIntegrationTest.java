@@ -76,8 +76,25 @@ public class TodoListIntegrationTest {
     @Test
     void should_return_msg_when_hit_delete_todo_end_point_given_id() throws Exception {
         todoListRepository.saveAll(todoList);
-        mockMvc.perform(delete("/todos/" + id))
+        Todo foundTodo = todoList.get(0);
+        mockMvc.perform(delete("/todos/" + foundTodo.getId()))
                 .andExpect(jsonPath("$").value("DELETE_SUCCESS"))
+                .andDo(print());
+    }
+
+    @Test
+    void should_return_todo_when_hit_put_todo_end_point_given_todo_info() throws Exception {
+        todoListRepository.saveAll(todoList);
+        String info = "{\n" +
+                "    \"content\": \"1234\",\n" +
+                "    \"status\": false\n" +
+                "}";
+        mockMvc.perform(put("/todos/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(info)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").value("1234"))
+                .andExpect(jsonPath("$.status").value(false))
                 .andDo(print());
     }
 
