@@ -13,12 +13,12 @@ public class TodoListController {
     @Autowired
     private TodoListService todoListService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Todo> findAllTodoList() {
         return todoListService.findAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Todo addTodo(@RequestBody Todo todo) {
         return todoListService.save(todo);
     }

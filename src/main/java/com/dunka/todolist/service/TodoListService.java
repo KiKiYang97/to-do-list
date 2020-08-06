@@ -28,8 +28,14 @@ public class TodoListService {
     }
 
     public Todo putTodo(Integer id, Todo todo2) {
+        todo2.setId(id);
         Todo todo = todoListRepository.findById(id).orElse(null);
-        BeanUtils.copyProperties(todo2,todo);
+        if (todo == null) {
+            //throw
+        } else {
+            if(todo2.getContent()!=null) todo.setContent(todo2.getContent());
+            if(todo2.getStatus()!=null) todo.setStatus(todo2.getStatus());
+        }
         return todoListRepository.save(todo);
     }
 
