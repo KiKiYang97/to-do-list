@@ -6,7 +6,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TodoListService {
@@ -29,7 +28,8 @@ public class TodoListService {
         return todoListRepository.save(todo);
     }
 
-    public void deleteById(Integer id) {
+    public String deleteById(Integer id) {
         todoListRepository.deleteById(id);
+        return null;
     }
 }

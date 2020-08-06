@@ -62,11 +62,13 @@ public class TodoListServiceTest {
         assertEquals(todo2,putTodo);
     }
     @Test
-    void should_return_todo_when_delete_given_id() {
+    void should_return_message_todo_when_delete_given_id() {
         Integer id = 1;
-//        given(todoListRepository.findById(id)).willReturn(Optional.of(todo ));
+        String msg = "DELETE_SUCCESS!";
+        given(todoListRepository.findById(id)).willReturn(Optional.of(todo ));
         doAnswer(invocation -> null).when(todoListRepository).deleteById(id);
-        todoListService.deleteById(id);
+        String deleteMsg =  todoListService.deleteById(id);
         verify(todoListRepository).deleteById(id);
+        assertEquals(msg,deleteMsg);
     }
 }
