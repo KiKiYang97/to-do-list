@@ -64,8 +64,8 @@ public class TodoListServiceTest {
     @Test
     void should_return_message_todo_when_delete_given_id() {
         Integer id = 1;
-        String msg = "DELETE_SUCCESS!";
-        given(todoListRepository.findById(id)).willReturn(Optional.of(todo ));
+        String msg = "DELETE_SUCCESS";
+        given(todoListRepository.findById(id)).willReturn(null);
         doAnswer(invocation -> null).when(todoListRepository).deleteById(id);
         String deleteMsg =  todoListService.deleteById(id);
         verify(todoListRepository).deleteById(id);

@@ -5,11 +5,16 @@ import com.dunka.todolist.repository.TodoListRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoListService {
+    public static final String DELETE_FAIL = "DELETE_FAIL";
+    public static final String DELETE_SUCCESS = "DELETE_SUCCESS";
     private TodoListRepository todoListRepository;
+
     public TodoListService(TodoListRepository todoListRepository) {
         this.todoListRepository = todoListRepository;
     }
@@ -28,8 +33,14 @@ public class TodoListService {
         return todoListRepository.save(todo);
     }
 
+    @Transactional
     public String deleteById(Integer id) {
         todoListRepository.deleteById(id);
-        return null;
+        Optional<Todo> todo = todoListRepository.findById(id);
+        if (todo == null || !todo.isPresent()) {
+            return DELETE_SUCCESS;
+        } else {
+            return DELETE_FAIL;
+        }
     }
 }
